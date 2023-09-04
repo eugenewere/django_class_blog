@@ -22,7 +22,7 @@ from blog import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('posts.urls'))
+    path('', include('posts.urls', namespace='posts'))
     # path('orders/', include('orders.urls'))
 ]
 

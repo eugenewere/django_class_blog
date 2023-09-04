@@ -16,3 +16,15 @@ python manage.py startapp posts
 ```
 python manage.py runserver
 ```
+
+### Freeze Req
+
+```
+pip freeze > requirements.txt
+```
+
+### install from req file
+
+```
+pip install -r requirements.txt
+```
