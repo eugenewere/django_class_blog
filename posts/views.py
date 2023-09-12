@@ -1,11 +1,12 @@
 from django.shortcuts import render
-# from django.http import HttpResponse
+from posts.models import Post
 
 
 def home(request):
+    posts = Post.objects.all()
     context = {
         'title': 'Home',
-        'data': [1,2,3,4,5,6,7,8,9,10]
+        'posts': posts
     }
     return render(request, 'home/landing_page.html', context)
 
