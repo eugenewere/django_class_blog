@@ -22,8 +22,8 @@ from blog import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('posts.urls', namespace='posts'))
-    # path('orders/', include('orders.urls'))
+    path('', include('posts.urls', namespace='posts')),
+    # path('orders/', include('orders.urls', namespace='order'))
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_URL)

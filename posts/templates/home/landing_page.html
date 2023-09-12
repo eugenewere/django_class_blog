@@ -10,7 +10,7 @@
 
 {% block  content %}
     <h1>My First Heading Home</h1>
-
+    <a href="{% url 'posts:home_page' %}">Home</a>
     {% for i in data %}
         <p>My first paragraph. {{ i }}</p>
     {% endfor %}
@@ -19,7 +19,5 @@
 
 
 {% block script %}
-<!-- <script>
-    alert('kkkkkkkkkkkkkkkkk')
-</script> -->
+
 {% endblock %}
