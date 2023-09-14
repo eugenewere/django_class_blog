@@ -28,12 +28,16 @@
         <div class="col-sm-12 col-md-6 col-lg-4 mb-3">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title ">{{ post.title }}</h4>
+                    <a class="text-decoration-none text-black" href="{% url 'posts:post_details'  post.id %}">
+                        <h4 class="card-title ">{{ post.title }}</h4>
+                    </a>
                     <small class="mt-3 text-muted">{{post.subject}}</small>
                 </div>
                 <div class="card-body">
                     <div class="image_wrapper">
-                        <img src="{{post.main_image.url}}" alt="{{ post.title }}">
+                        <a href="{% url 'posts:post_details'  post.id %}">
+                            <img src="{{post.main_image.url}}" alt="{{ post.title }}">
+                        </a>
                     </div>
                     <div class="description_wrapper pt-3">
                         <p class="description text-black">{{ post.description }}</p>
