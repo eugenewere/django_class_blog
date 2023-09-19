@@ -1,15 +1,20 @@
 
 from django import forms
 from django.core.exceptions import ValidationError
+from .models import Post
 
 
 
-
-class PostForm(forms.Form):
-    title  =  forms.CharField(max_length=255, required=True)
-    subject = forms.CharField(max_length=255, required=True)
-    description =  forms.Textarea()
-    main_image = forms.ImageField()
+class PostForm(forms.ModelForm):
+    # title  =  forms.CharField(max_length=255, required=True)
+    # subject = forms.CharField(max_length=255, required=True)
+    # description =  forms.CharField()
+    # main_image = forms.ImageField()
+    
+    
+    class Meta:
+        model = Post
+        fields = ('title', 'subject', 'description', 'main_image')
     
     def clean_title(self):
         title =  self.cleaned_data['title']

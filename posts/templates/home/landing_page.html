@@ -36,11 +36,11 @@
                 <div class="card-body">
                     <div class="image_wrapper">
                         <a href="{% url 'posts:post_details'  post.id %}">
-                            <img src="{{post.main_image.url}}" alt="{{ post.title }}">
+                            <img src="{{post.get_image }}" alt="{{ post.title }}">
                         </a>
                     </div>
                     <div class="description_wrapper pt-3">
-                        <p class="description text-black">{{ post.description }}</p>
+                        <p class="description text-black">{{ post.description|truncatechars:150 }}</p>
                     </div>
                 </div>
             </div>
