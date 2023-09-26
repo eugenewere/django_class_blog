@@ -1,6 +1,10 @@
 from django.shortcuts import render, redirect, reverse
 from posts.models import Post
 from posts.forms import *
+from django.contrib.auth import authenticate, login
+
+
+
 
 def home(request):
     posts = Post.objects.order_by("-created_at")
@@ -132,3 +136,52 @@ def delete_post(request, post_id):
     if post:
         post.delete()
     return redirect('posts:home_page') 
+
+
+def register_page(request):
+    context = {
+        'title': 'Register'
+    }
+    return render(request,'auth/register.html', context)
+
+
+
+def login_page(request):
+    context = {
+        'title': 'Login'
+    }
+    return render(request,'auth/login.html', context)
+
+
+def register_user(request):
+    if request.method == "POST":
+        user_form =  UserRegistrationForm(request.POST)
+        if user_form.is_valid():
+            user_form.save()
+            return redirect('posts:login_page')
+        else: 
+            context = {
+                'title': 'Register',
+                'form': user_form,
+            }
+            return render(request,'auth/register.html', context)
+    return redirect('posts:register_page')
+
+def login_user(request):
+    if request.method == "POST":
+        user_form =  UserLoginForm(request.POST)
+        
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        
+        if user_form.is_valid():
+            user_obj = authenticate(username=username, password=password )
+            login(request, user_obj)
+            return redirect('posts:home_page')
+        else: 
+            context = {
+                'title': 'Login',
+                'form': user_form,
+            }
+            return render(request,'auth/login.html', context)
+    return redirect('posts:login_page')

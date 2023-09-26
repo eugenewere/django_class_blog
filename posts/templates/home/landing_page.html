@@ -24,28 +24,34 @@
 {% block content %}
 <div class="container py-5">
     <div class="row m-0">
-        {% for post in posts %}
-        <div class="col-sm-12 col-md-6 col-lg-4 mb-3">
-            <div class="card">
-                <div class="card-header">
-                    <a class="text-decoration-none text-black" href="{% url 'posts:post_details'  post.id %}">
-                        <h4 class="card-title ">{{ post.title }}</h4>
-                    </a>
-                    <small class="mt-3 text-muted">{{post.subject}}</small>
-                </div>
-                <div class="card-body">
-                    <div class="image_wrapper">
-                        <a href="{% url 'posts:post_details'  post.id %}">
-                            <img src="{{post.get_image }}" alt="{{ post.title }}">
+        {% if posts %}
+            {% for post in posts %}
+            <div class="col-sm-12 col-md-6 col-lg-4 mb-3">
+                <div class="card">
+                    <div class="card-header">
+                        <a class="text-decoration-none text-black" href="{% url 'posts:post_details'  post.id %}">
+                            <h4 class="card-title ">{{ post.title }}</h4>
                         </a>
+                        <small class="mt-3 text-muted">{{post.subject}}</small>
                     </div>
-                    <div class="description_wrapper pt-3">
-                        <p class="description text-black">{{ post.description|truncatechars:150 }}</p>
+                    <div class="card-body">
+                        <div class="image_wrapper">
+                            <a href="{% url 'posts:post_details'  post.id %}">
+                                <img src="{{post.get_image }}" alt="{{ post.title }}">
+                            </a>
+                        </div>
+                        <div class="description_wrapper pt-3">
+                            <p class="description text-black">{{ post.description|truncatechars:150 }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        {% endfor %}
+            {% endfor %}
+        {% else %}
+            <div class="col-sm-12 d-flex justify-content-center align-items-center">
+                <h4 class="card-title">No Posts</h4>
+            </div>
+        {% endif %}
     </div>
 </div>
 

@@ -2,6 +2,7 @@
     "files.autoSave": "afterDelay",
     "python.linting.pylintEnabled": true, 
     "python.jediEnabled": false,
+    "nuxt.isNuxtApp": false,
     // "files.associations": {
     //     // extension name : html
     //     "*.ejs": "html",

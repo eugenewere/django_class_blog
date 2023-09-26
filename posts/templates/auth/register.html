@@ -1,0 +1,102 @@
+{% extends 'layout/base_layout.html' %}
+{% block links %}
+<style>
+    p {
+        color: blue;
+    }
+
+    .d-block {
+        display: block;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<div class="container py-4">
+    <div class="row m-0">
+        <div class="col-lg-6 col-md-12 mx-auto">
+            <form action="{% url 'posts:register_user' %}" enctype="multipart/form-data" method="post">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-sm-12 mb-5">
+                        <h3 class="font-weight-bold">Register Account</h3>
+                        <small class="mt-3 text-muted">Fill all Fields In the Form</small>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label for="first_name" class="form-label">First Name</label>
+                            <input value="{{ request.POST.first_name }}" type="text" name="first_name"
+                                class="form-control" id="first_name" aria-describedby="first_nameHelp">
+                            <div class="invalid-feedback d-block">
+                                {{ form.first_name.errors }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label for="last_name" class="form-label">Last Name</label>
+                            <input value="{{ request.POST.last_name }}" type="text" name="last_name"
+                                class="form-control" id="last_name" aria-describedby="last_nameHelp">
+                            <div class="invalid-feedback d-block">
+                                {{ form.last_name.errors }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label for="usernmae" class="form-label">Username</label>
+                            <input value="{{ request.POST.usernmae }}" type="text" name="username" class="form-control"
+                                id="usernmae" aria-describedby="subjectHelp">
+                            <div class="invalid-feedback d-block">
+                                {{ form.usernmae.errors }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input value="{{ request.POST.email }}" type="email" name="email" class="form-control"
+                                id="email" aria-describedby="subjectHelp">
+                            <div class="invalid-feedback d-block">
+                                {{ form.email.errors }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label for="password1" class="form-label">Password</label>
+                            <input value="{{ request.POST.password1 }}" type="password" name="password1"
+                                class="form-control" id="password1" aria-describedby="passwordHelp">
+                            <div class="invalid-feedback d-block">
+                                {{ form.password1.errors }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label for="password2" class="form-label">Confirm Password</label>
+                            <input value="{{ request.POST.password2 }}" type="password" name="password2"
+                                class="form-control" id="password2" aria-describedby="subjectHelp">
+                            <div class="invalid-feedback d-block">
+                                {{ form.password2.errors }}
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <div class="col-12">
+                        <button class="btn btn-outline-success w-100" type="submit">Submit Post</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block script %}
+
+
+{% endblock %}
