@@ -7,7 +7,9 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate
 
 
-class UserLoginForm(forms.ModelForm):
+class UserLoginForm(forms.Form):
+    username = forms.CharField(label="Username", max_length=100)
+    password = forms.CharField(label="Password", max_length=100)
     class Meta:
         model = User
         fields = ('username', 'password')

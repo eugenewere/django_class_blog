@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, reverse
 from posts.models import Post
 from posts.forms import *
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 
 
 
@@ -169,19 +170,31 @@ def register_user(request):
 
 def login_user(request):
     if request.method == "POST":
-        user_form =  UserLoginForm(request.POST)
         
         username = request.POST.get('username')
         password = request.POST.get('password')
         
-        if user_form.is_valid():
-            user_obj = authenticate(username=username, password=password )
-            login(request, user_obj)
-            return redirect('posts:home_page')
-        else: 
-            context = {
-                'title': 'Login',
-                'form': user_form,
-            }
-            return render(request,'auth/login.html', context)
+        if not username:
+            messages.error(request,"Add Username.")
+            return redirect('posts:login_page')
+        if not password:
+            messages.error(request,"Add Password.")
+            return redirect('posts:login_page')    
+        
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            messages.info(request, f"You are now logged in as {username}.")
+            return redirect("posts:home_page")
+        else:
+            messages.error(request,"Invalid username or password.")
+            return redirect('posts:login_page')
+    
     return redirect('posts:login_page')
+
+
+
+def logout_user(request):
+    logout(request)
+    messages.info(request, "You have successfully logged out.") 
+    return redirect("posts:home_page")
