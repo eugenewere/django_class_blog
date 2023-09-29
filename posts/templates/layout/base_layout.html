@@ -3,74 +3,90 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="web page">
-    <meta name="keywords" content="Blog, Posts, Django">
-    <title>{{title}}</title>
-    <link rel="stylesheet" href="{% static 'css/index.css' %}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    {% block links %}
-    {% endblock %}
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="web page">
+  <meta name="keywords" content="Blog, Posts, Django">
+  <title>{{title}}</title>
+  <link rel="stylesheet" href="{% static 'css/index.css' %}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  {% block links %}
+  {% endblock %}
 
-    <style>
-      .font-weight-bold{
-        font-weight: bold !important;
-      }
-    </style>
+  <style>
+    .font-weight-bold {
+      font-weight: bold !important;
+    }
+  </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container">
-          <a class="navbar-brand" href="{% url 'posts:home_page' %}">Blog</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'posts:home_page' %}">Blog</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
 
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{% url 'posts:home_page' %}">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'posts:about_page' %}">About</a>
-              </li>
-            </ul>
-            <ul class="navbar-nav" style="margin-left: auto !important;">
-              {% if request.user.is_authenticated %}
-                <li class="nav-item">
-                  <a href="{% url 'posts:create_post' %}" class="btn btn-success btn-sm">  <i class="fa-solid fa-plus"></i> Add Post</a>
-                </li>
-              {% else %}
-                <li class="nav-item ">
-                  <a href="{% url 'posts:login_page' %}" class="btn btn-success btn-sm mr-3">  <i class="fa-solid fa-user"></i> Login</a>
-                </li>
-                <li class="nav-item">
-                  <a href="{% url 'posts:register_page' %}" class="btn btn-success btn-sm ">  <i class="fa-solid fa-user"></i> Register</a>
-                </li>
-              {% endif %}
-            </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'posts:home_page' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'posts:about_page' %}">About</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav" style="margin-left: auto !important;">
+          {% if request.user.is_authenticated %}
+          <li class="nav-item">
+            <a href="{% url 'posts:create_post' %}" class="btn btn-success btn-sm">
+              <i class="fa-solid fa-plus"></i> Add Post</a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'posts:category_page' %}" class="btn btn-success btn-sm">
+              <i class="fa-solid fa-plus"></i> Categories</a>
+          </li>
+          <li class="nav-item ">
+            <a href="{% url 'posts:logout_user' %}" class="btn btn-success btn-sm mr-3"> <i class="fa-solid fa-sign-out"></i>
+              Logout</a>
+          </li>
+          {% else %}
+          <li class="nav-item ">
+            <a href="{% url 'posts:login_page' %}" class="btn btn-success btn-sm mr-3"> <i class="fa-solid fa-user"></i>
+              Login</a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'posts:register_page' %}" class="btn btn-success btn-sm "> <i class="fa-solid fa-user"></i>
+              Register</a>
+          </li>
+          {% endif %}
+        </ul>
 
-          </div>
-        </div>
-    </nav>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
     {% if messages %}
-      <ul class="messages">
-        {% for message in messages %}
-        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-        {% endfor %}
-      </ul>
+    <ul class="messages list-unstyled">
+      {% for message in messages %}
+      <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
     {% endif %}
-    {% block content %}{% endblock content %}
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"></script>
-    <script src="{% static 'js/index.js' %}"></script>
+  </div>
 
-    {% block script %}
-    {% endblock %}
+
+  {% block content %}{% endblock content %}
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"></script>
+  <script src="{% static 'js/index.js' %}"></script>
+
+  {% block script %}
+  {% endblock %}
 </body>
 
 </html>

@@ -68,10 +68,6 @@ class UserRegistrationForm(UserCreationForm):
 
 
 class PostForm(forms.ModelForm):
-    
-    
-
-
 
     #seller update form
     # title  =  forms.CharField(max_length=255, required=True)
