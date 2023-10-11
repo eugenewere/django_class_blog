@@ -4,6 +4,11 @@ from posts.forms import *
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from .serializer import *
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+
+
 
 
 
@@ -268,3 +273,13 @@ def delete_category(request, item_id):
     category.delete()
     messages.success(request, 'Category Deleted Successfully')
     return redirect('posts:category_page')
+
+
+
+
+@api_view(['GET'])
+def category_serializer(request):
+    categories =  Category.objects.order_by('-created_at')
+    category_serializer = CategorySerializer(categories, many=True)
+    return Response(category_serializer.data, status=200)
+    

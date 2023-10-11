@@ -36,8 +36,8 @@
                         <th>{{ forloop.counter }}</th>
                         <td>{{category.name|title }}</td>
                         <td>{{ category.created_at}}</td>
-                        <td>
-                            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#updateCategoryModal{{ category.id }}">Edit</button>
+                        <td>updateCategoryModal
+                            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#{{ category.id }}">Edit</button>
                             <a href="{% url 'posts:delete_category' category.id %}" class="btn btn-danger">Delete</a>
                         </td>
                     </tr>

@@ -25,4 +25,10 @@ urlpatterns = [
     path('add_category/', views.add_category, name="add_category"), 
     path('edit_category/<int:item_id>', views.edit_category, name="edit_category"), 
     path('delete_category/<int:item_id>', views.delete_category, name="delete_category"), 
+    
+    
+    
+    
+    
+    path('api/category/', views.category_serializer, name='category_serializer')
 ]
