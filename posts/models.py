@@ -147,6 +147,10 @@ class Category(TimeMixin):
         
     def __str__(self):
         return f"{self.name}"
+
+    @property
+    def capitalize_name(self):
+        return self.name.capitalize()
     
     
     
@@ -159,7 +163,6 @@ class Post(TimeMixin):
     description = models.TextField(null=False)
     main_image = models.ImageField(upload_to='posts')
 
-    
     class Meta:
         db_table = 'post'
     
