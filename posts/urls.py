@@ -30,5 +30,7 @@ urlpatterns = [
     
     
     
-    path('api/category/', views.category_serializer, name='category_serializer')
+    # path('api/category/', views.category_serializer, name='category_serializer'),
+
+    path('api/category/', views.CategorySerializerApiView().as_view())
 ]

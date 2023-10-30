@@ -1,12 +1,13 @@
-from django.shortcuts import render, redirect, reverse
-from posts.models import Post, Category
-from posts.forms import *
-from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
-from .serializer import *
-from rest_framework.response import Response
+from django.shortcuts import render, redirect, reverse
 from rest_framework.decorators import api_view
+from rest_framework.generics import ListAPIView
+from rest_framework.response import Response
+
+from posts.forms import *
+from .serializer import *
 
 
 def home(request):
@@ -277,3 +278,67 @@ def category_serializer(request):
 
     category_serializer = CategorySerializer(categories, many=True)
     return Response(category_serializer.data, status=200)
+
+
+
+class CategorySerializerApiView(ListAPIView):
+    # queryset = Category.objects.all()
+    # serializer_class = CategorySerializer
+
+    queryset = ''
+
+    def get(self, request):
+        categories = Category.objects.all()
+        category_serializer_data = CategorySerializer(categories, many=True)
+        return Response(category_serializer_data.data, status=200)
+
+    def post(self, request):
+        name = request.data.get('name')
+
+        if not name:
+            return Response({
+                'message': 'Please Add Name'
+            }, status=400)
+        if Category.objects.filter(name=name).exists():
+            return Response({
+                'message': 'Category Exists'
+            }, status=400)
+        category = Category.objects.create(
+            name=name
+        )
+        category_serializer_obj = CategorySerializer(category, many=False)
+        return Response(category_serializer_obj.data, status=200)
+
+    def put(self, request):
+        name = request.data.get('name')
+        item_id = request.GET.get('item_id')
+        category = Category.objects.filter(id=item_id).first()
+        if not name:
+            return Response({
+                'message': 'Please Add Name'
+            }, status=400)
+        if not category:
+            return Response({
+                'message': 'Category Not Found'
+            }, status=400)
+        if Category.objects.filter(name__iexact=name).exclude(id=item_id).exists():
+            return Response({
+                'message': 'Category Exists'
+            }, status=400)
+        category = Category.objects.filter(id=item_id).update(
+            name=name
+        )
+        category_serializer_obj = CategorySerializer(category, many=False)
+        return Response(category_serializer_obj.data, status=200)
+
+    def delete(self, request):
+        item_id = request.GET.get('item_id')
+        category = Category.objects.filter(id=item_id).first()
+        if not category:
+            return Response({
+                'message': 'Category Not Found'
+            }, status=400)
+        category.delete()
+        return Response({
+            'message': "Category Deleted"
+        }, status=200)
